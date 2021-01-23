@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Course from './components/Course.js';
 import CourseList from './components/CourseList';
 import { SafeAreaView, ScrollView, TouchableOpacity, StyleSheet, Text, View } from 'react-native';
@@ -36,12 +36,22 @@ const Banner = ({title}) => (
 
 
 const App = () => {
+  const [schedule, setSchedule] = useState({ title: '', courses: [] });
+
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      const response = await fetch('https://courses.cs.northwestern.edu/394/data/cs-courses.php');
+      if (!response.ok) throw response;
+      const json = await response.json();
+      setSchedule(json);
+    };
+    fetchSchedule();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container}>
-        <Banner title={schedule.title} />
-        <CourseList courses={schedule.courses} />
-      </View>
+      <Banner title={schedule.title} />
+      <CourseList courses={schedule.courses} />
     </SafeAreaView>
     
   );
@@ -58,6 +68,7 @@ const styles = StyleSheet.create({
     color: '#888',
     fontSize: 32,
   },
+  
 });
 
 export default App;
