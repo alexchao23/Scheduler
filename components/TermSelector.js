@@ -15,7 +15,7 @@ const TermSelector = ({selectedTerm, setSelectedTerm}) => (
     <View style={styles.termSelector}>
         {
             terms.map((term) => (
-                <TermButton term={term} 
+                <TermButton key={term} term={term} 
                     setSelectedTerm={setSelectedTerm}
                     isActive={term === selectedTerm}
                 />
