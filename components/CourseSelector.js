@@ -6,7 +6,7 @@ import Course from './Course';
 
 
 
-const CourseSelector = ({courses}) => {
+const CourseSelector = ({courses, view}) => {
     const [selected, setSelected] = useState([]);
 
     const toggle = course => setSelected(selected => (
@@ -20,7 +20,8 @@ const CourseSelector = ({courses}) => {
                     <Course key={course.id} course={course}
                     select={toggle}
                     isDisabled={hasConflict(course, selected)}
-                    isSelected={selected.includes(course)}/>
+                    isSelected={selected.includes(course)}
+                    view={view}/>
                 ))
             }
         </View>
