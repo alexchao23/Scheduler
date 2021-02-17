@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ScheduleScreen from './screens/ScheduleScreen';
 import CourseDetailScreen from './screens/CourseDetailScreen';
 import CourseEditScreen from './screens/CourseEditScreen';
@@ -8,7 +8,7 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import UserContext from './utils/UserContext';
-import { useEffect } from 'react/cjs/react.development';
+//import { useEffect } from 'react/cjs/react.development';
 import { firebase } from './firebase';
 
 const Stack = createStackNavigator();
@@ -32,7 +32,7 @@ const App = () => {
     if (auth && auth.uid) {
       const db = firebase.database().ref('users').child(auth.uid);
       const handleData = snap => {
-        setUser(uid = auth.uid, ...snap.val());
+        setUser(auth.uid, ...snap.val());
       }
       db.on('value', handleData, error => alert(error));
       return () => { db.off('value', handleData); };
